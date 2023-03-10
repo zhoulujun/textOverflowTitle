@@ -1,0 +1,63 @@
+{
+  "name": "text-overflow-title",
+  "version": "0.0.1",
+  "private": false,
+  "license": "MIT",
+  "main": "dist/text-overflow-title.umd.js",
+  "module": "dist/text-overflow-title.es.js",
+  "types": "dist/packages/index.d.ts",
+  "style": "dist/style.css",
+  "files": [
+    "dist",
+    "packages"
+  ],
+  "keywords": [
+    "vue3",
+    "vue-next",
+    "grid-layout",
+    "vue-grid-layout",
+    "vue3-grid-layout"
+  ],
+  "description": "vue3 版本的 vue3-grid-layout，tsx适配版本",
+  "scripts": {
+    "start": "vite --host=localhost --port=9018",
+    "build:doc": "build-storybook",
+    "build:lib": "vue-tsc --noEmit && vite build --config ./build/lib.config.ts",
+    "storybook": "start-storybook -p 6006"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:zhoulujun/textOverflowTitle.git "
+  },
+  "peerDependencies": {
+    "vue": "^3.2.47",
+    "bkui-vue": "^0.0.1-beta.300"
+  },
+  "dependencies": {
+    "bkui-vue": "^0.0.1-beta.368",
+    "vue": "^3.2.47"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.18.9",
+    "@babel/eslint-parser": "^7.18.9",
+    "@babel/plugin-transform-runtime": "^7.18.9",
+    "@babel/preset-env": "^7.18.9",
+    "@blueking/eslint-config-bk": "^2.1.0-beta.7",
+    "@blueking/stylelint-config-bk": "^2.0.0",
+    "@types/node": "^16.11.12",
+    "@typescript-eslint/eslint-plugin": "^5.16.0",
+    "@typescript-eslint/parser": "^5.16.0",
+    "@vitejs/plugin-vue": "^3.0.1",
+    "@vitejs/plugin-vue-jsx": "^2.0.0",
+    "@vue/babel-plugin-jsx": "^1.1.1",
+    "@vue/compiler-sfc": "^3.2.37",
+    "babel-loader": "^8.2.5",
+    "typescript": "^4.7.4",
+    "vite": "^3.0.3",
+    "vite-plugin-copy": "^0.1.6",
+    "vite-plugin-dts": "^1.4.0",
+    "vite-plugin-md": "^0.20.0",
+    "vue-tsc": "^0.39.2",
+    "webpack": "^4.46.0"
+  }
+}

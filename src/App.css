@@ -1,0 +1,5 @@
+@import "../node_modules/bkui-vue/dist/style.css";
+
+.box{
+    width: 100px;
+}
