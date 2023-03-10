@@ -1,6 +1,6 @@
 {
   "name": "text-overflow-title",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": false,
   "license": "MIT",
   "main": "dist/text-overflow-title.umd.js",

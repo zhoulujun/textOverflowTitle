@@ -1,180 +1,59 @@
-[原仓库 https://github.com/jbaysolutions/vue-grid-layout](https://github.com/jbaysolutions/vue-grid-layout)一直没人重写 vue3 版本，所以我自己写了一个。
-[vue3 fork的仓库https://github.com/zhl1232/v3-grid-layout](https://github.com/zhl1232/v3-grid-layout)
-在上面的两个仓库上，改为tsx 代码，修改了eventBus，暴露出 从外部拖曳到gird-layout 的变量
+# 文本溢出处理
 
-# 安装
-
-```shell
-npm install vue-grid-layout-next
-```
-
-# 使用
-
-1.  全局注册  
-在 main.ts 中引用
-```js
-import { createApp } from 'vue'
-import App from './App.vue'
-import GridLayout from 'vue-grid-layout-next'
-import 'vue-grid-layout-next/dist/style.css'
-const app = createApp(App)
-app.use(GridLayout).mount("#app")
-```
-2. 局部注册
-jsx
-```typescript
-import { defineComponent,ref } from 'vue'
-import { GridItem, GridLayout, eventBusKey } from 'vue-grid-layout-next';
-// import Bus from '@/utils/Bus';
-export default defineComponent({
-    name: 'App',
-    setup() {
-        // provide(eventBusKey, Bus); 需要外部调用方法时候使用
-        const layout = ref([
-            { x: 0, y: 0, w: 2, h: 2, i: '0', static: false, minH: 5 },
-            { x: 2, y: 0, w: 2, h: 4, i: '1', static: true },
-            { x: 4, y: 0, w: 2, h: 5, i: '2', static: false },
-            { x: 6, y: 0, w: 2, h: 3, i: '3', static: false },
-            { x: 8, y: 0, w: 2, h: 3, i: '4', static: false },
-            { x: 10, y: 0, w: 2, h: 3, i: '5', static: false },
-            { x: 0, y: 5, w: 2, h: 5, i: '6', static: false },
-            { x: 2, y: 5, w: 2, h: 5, i: '7', static: false },
-            { x: 4, y: 5, w: 2, h: 5, i: '8', static: false },
-            { x: 6, y: 3, w: 2, h: 4, i: '9', static: true }
-        ])
-        return { layout }
-    },
-    render() {
-        return (
-            <GridLayout
-                layout={this.layout}
-                col-num={12}
-                row-height={30}
-                is-draggable={true}
-                is-resizable={true}
-                is-mirrored={false}
-                vertical-compact={true}
-                margin={[10, 10]}
-                use-css-transforms={true}
-            >
-                {this.layout.map(item => (
-                    <GridItem
-                        key={item.i}
-                        drag-allow-from='.toolbox'
-                        i={item.i}
-                        x={item.x}
-                        y={item.y}
-                        w={item.w}
-                        h={item.h}
-                        static={item.static}
-                    >
-                        <div class="box">
-                            <div class="toolbox">drag</div>
-                            <div class="item">
-                                <div>{ item.i }</div>
-                                <div>static:{ String(item.static) }</div>
-                            </div>
-                        </div>
-                    </GridItem>
-                ))}
-
-            </GridLayout>
-        )
-    }
-})
-
-```
-Bus 代码
-```typescript
-import mitt from 'mitt';
-import { ChartType } from '@/typings';
-type Events = {
-  menuDrag?: { e: DragEvent, chart: ChartType };
-  menuDragend?: { e: DragEvent, chart: ChartType };
-  dragEvent?: {
-    eventType: string
-    i: string | number
-    x: number
-    y: number
-    h: any
-    w: any
-  },
-  compact?: any
-  setColNum?: any
-};
-
-const Bus = mitt<Events>();
-
-export default Bus;
-
-```
-
-vue
+## 组件
 ```vue
-<script setup lang="ts">
-import { GridItem, GridLayout } from "vue-grid-layout-next";
-import type { Layout } from "vue-grid-layout-next/dist/helpers/utils";
-import "v3-grid-layout/dist/style.css";
-const layout: Layout = [
-  { x: 0, y: 0, w: 2, h: 2, i: "0", static: false, minH: 5 },
-  { x: 2, y: 0, w: 2, h: 4, i: "1", static: true },
-  { x: 4, y: 0, w: 2, h: 5, i: "2", static: false },
-  { x: 6, y: 0, w: 2, h: 3, i: "3", static: false },
-  { x: 8, y: 0, w: 2, h: 3, i: "4", static: false },
-  { x: 10, y: 0, w: 2, h: 3, i: "5", static: false },
-  { x: 0, y: 5, w: 2, h: 5, i: "6", static: false },
-  { x: 2, y: 5, w: 2, h: 5, i: "7", static: false },
-  { x: 4, y: 5, w: 2, h: 5, i: "8", static: false },
-  { x: 6, y: 3, w: 2, h: 4, i: "9", static: true },
-];
-</script>
-
 <template>
-  <grid-layout
-    v-model:layout="layout"
-    :col-num="12"
-    :row-height="30"
-    :is-draggable="true"
-    :is-resizable="true"
-    :is-mirrored="false"
-    :vertical-compact="true"
-    :margin="[10, 10]"
-    :use-css-transforms="true"
-  >
-    <grid-item
-      v-for="item in layout"
-      :key="item.i"
-      drag-allow-from=".toolbox"
-      v-bind="item"
-    >
-      <div style="display: flex; flex-direction: column; height: 100%">
-        <div
-          class="toolbox"
-          style="
-            width: 100%;
-            height: 20px;
-            text-align: center;
-            background-color: bisque;
-          "
-        >
-          drag
-        </div>
-        <div style="height: 100%; text-align: center; background-color: #eee">
-          {{ item.i }}
-          <br />
-          static:{{ item.static }}
-        </div>
-      </div>
-    </grid-item>
-  </grid-layout>
+  <div>
+    <div style="width: 100px;margin-bottom: 20px;">
+      <bk-overflow-title>文本超出33333222222222222222222222222</bk-overflow-title>
+    </div>
+    <div style="width: 100px;margin-bottom: 20px;">
+      <bk-overflow-title type="tips">
+        文本超出33333222222222222222222222222
+      </bk-overflow-title>
+    </div>
+  </div>
 </template>
 
+
 ```
+### overflowTitle 组件属性
+<table class="props-table"><thead><th>参数</th><th>说明</th><th>类型</th><th>可选值</th><th>默认值</th></thead><tbody><tr><td>content</td><td>文本内容。没有的话去default slot</td><td>String</td><td><div class="table-cell">--</div></td><td>--</td></tr><tr><td>type</td><td>默认给文本加上title，如果tips，则鼠标悬浮添加添加tooltips，但是如果不是纯文本</td><td>String</td><td><div class="table-cell"><span class="cell-item">tips</span><span class="cell-item">title</span></div></td><td><div class="table-cell"><span class="cell-item">title</span></div></td></tr><tr><td>calType</td><td>计算文本宽度方式，默认通过dom计算机文本宽度，canvas则通过measureText计算</td><td>String</td><td><div class="table-cell"><span class="cell-item">dom</span><span class="cell-item">canvas</span></div></td><td><div class="table-cell"><span class="cell-item">dom</span></div></td></tr><tr><td>resizeable</td><td>是否监听文本内容变化</td><td>Boolean</td><td><div class="table-cell">--</div></td><td><div class="table-cell"><span class="cell-item">false</span></div></td></tr></tbody></table>
 
-# TODO
+## 指令
+```vue
+<template>
+  <div>
+    <div style="width: 100px;margin-bottom: 20px;">
+      <div
+        v-overflow-title
+        class="text-ov"
+      >
+        222222222222222222222222
+      </div>
+    </div>
+  </div>
+</template>
+<script >
 
-[x] 支持 TS  
-[x] vue3 setup 语法  
-[ ] BUG：vue2 版本高度计算 rowHeight 不只计算了 item 的高度，还把 margin 乘进去了，导致高度和栅格高度预期不符  
-[x] BUG：vue2 版本镜像反转后，拖拽会有限制  
-[ ] 文档优化
+  import { overflowTitle } from 'bkui-vue';
+  import { defineComponent } from 'vue';
+
+  export default defineComponent({
+    directives: {
+      overflowTitle,
+    },
+    setup() {
+    },
+  });
+
+</script>
+
+```
+### overflowTitle 指令属性(计算父元素宽度)
+
+<table class="props-table"><thead><th>参数</th><th>说明</th><th>类型</th><th>可选值</th><th>默认值</th></thead><tbody><tr><td>content</td><td>文本内容。没有的话去default slot</td><td>String</td><td><div class="table-cell">--</div></td><td>--</td></tr><tr><td>calType</td><td>计算文本宽度方式，默认通过dom计算机文本宽度，canvas则通过measureText计算</td><td>String</td><td><div class="table-cell"><span class="cell-item">dom</span><span class="cell-item">canvas</span></div></td><td><div class="table-cell"><span class="cell-item">dom</span></div></td></tr></tbody></table>
+
+## 组件库
+整个功能已集中到MagicBox组件库
+可以使用组件库：https://bkui-vue.woa.com/overflow-title

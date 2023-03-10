@@ -1,7 +1,6 @@
 import {
   ObjectDirective,
 } from 'vue';
-import '../overflow.scss'
 import getActualWidthByDom from '../utils/getActualWidthByDom';
 import getActualWidthByCanvas from '../utils/getActualWidthByCanvas';
 

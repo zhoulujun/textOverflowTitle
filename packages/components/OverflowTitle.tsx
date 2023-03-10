@@ -22,13 +22,13 @@ export default defineComponent({
     content: String,
     type: {
       type: String as PropType<TipsType>,
-      default: 'tips'
+      default: 'title'
     },
     calType: {
       type: String as PropType<CalType>,
       default: 'dom'
     },
-    response: Boolean
+    resizeable: Boolean
 
   },
   setup(props, { slots }) {
@@ -52,10 +52,10 @@ export default defineComponent({
         let textWidth = 0
 
         if (props.calType === 'dom') {
-          textWidth = getActualWidthByDom(contentText.value as string, null, boxRef.value)
+          textWidth = getActualWidthByDom(textRef.value.textContent, null, boxRef.value)
         } else {
           const { fontSize, fontFamily } = getComputedStyle(boxRef.value)
-          textWidth = getActualWidthByCanvas(contentText.value as string, { fontSize, fontFamily })
+          textWidth = getActualWidthByCanvas(textRef.value.innerText, { fontSize, fontFamily })
         }
         if (textWidth > clientWidth) {
           isShowTips.value = true
@@ -65,7 +65,7 @@ export default defineComponent({
         }
       })
       resizeHandler()
-      if (props.response) {
+      if (props.resizeable) {
         const observer = new ResizeObserver(resizeHandler);
         observer.observe(boxRef.value);
         onUnmounted(() => {
