@@ -1,6 +1,6 @@
 {
   "name": "text-overflow-title",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "private": false,
   "license": "MIT",
   "main": "dist/text-overflow-title.umd.js",
@@ -12,13 +12,14 @@
     "packages"
   ],
   "keywords": [
-    "vue3",
-    "vue-next",
-    "grid-layout",
-    "vue-grid-layout",
-    "vue3-grid-layout"
+    "text-overflow",
+    "文本超出提示",
+    "文本限定宽度",
+    "tooltips",
+    "文本溢出",
+    "溢出提示"
   ],
-  "description": "vue3 文本溢出组件与指令，文本溢出，自动计算加上tooltips。",
+  "description": "vue3 文本溢出组件与指令，文本溢出，自动计算加上tooltips。文本超出宽度，自动隐藏，鼠标hover 加上提示",
   "scripts": {
     "start": "vite --host=localhost --port=9018",
     "build:doc": "build-storybook",
